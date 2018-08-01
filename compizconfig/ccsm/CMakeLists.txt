@@ -10,14 +10,12 @@ add_custom_command (OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/compizconfig_wrapper.c
 
 # Get arch
 execute_process (COMMAND uname -p OUTPUT_VARIABLE PROC_ARCH)
+string (REPLACE "\n" "" PROC_ARCH ${PROC_ARCH})
 
 # Get Python Version
-execute_process (COMMAND python -c "import sys; print str (sys.version_info[0]) + '.' + str (sys.version_info[1])"
-		 OUTPUT_VARIABLE PY_VERSION)
+find_package (PythonInterp 3.0 REQUIRED)
 
-string (REPLACE "\n" "" PROC_ARCH ${PROC_ARCH})
-string (REPLACE "\n" "" PY_VERSION ${PY_VERSION})
-
+set (PY_VERSION "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
 set (PY_BUILD_DIR lib.linux-${PROC_ARCH}-${PY_VERSION})
 set (PY_SCRIPTS_DIR scripts-${PY_VERSION})
 
@@ -36,19 +34,17 @@ string (STRIP ${COMPIZ_RELEASE_VERSION} COMPIZ_RELEASE_VERSION)
 set (VERSION ${COMPIZ_RELEASE_VERSION})
 
 add_custom_command (OUTPUT ${PY_CCSM_LIB}
-		    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/setup.py build --build-base=${CMAKE_CURRENT_BINARY_DIR}/build --version=${VERSION}
+		    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py build --build-base=${CMAKE_CURRENT_BINARY_DIR}/build --version=${VERSION}
 		    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 		    COMMENT "Generating Python Bytecode")
 
 add_custom_target (ccsm_module ALL DEPENDS
                    ${PY_CCSM_LIB})
 
-set (UNINSTALL_COMMAND "python ${CMAKE_CURRENT_SOURCE_DIR}/setup.py uninstall --prefix=${CMAKE_INSTALL_PREFIX} --version=${VERSION}")
+set (UNINSTALL_COMMAND "${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py uninstall --prefix=${CMAKE_INSTALL_PREFIX} --version=${VERSION}")
 
 compiz_add_code_to_uninstall_target (${UNINSTALL_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR})
 
 install (CODE
 	 "message (\"Installing python files\")
-	  execute_process (COMMAND cmake -DSETUP=${CMAKE_CURRENT_SOURCE_DIR}/setup.py -DPREFIX=${CMAKE_INSTALL_PREFIX} -DWDIR=${CMAKE_CURRENT_SOURCE_DIR} -DVERSION=${VERSION} -P ${compiz_SOURCE_DIR}/compizconfig/cmake/exec_setup_py_with_destdir.cmake)")
-
-
+	  execute_process (COMMAND cmake -DPY_EXECUTABLE=${PYTHON_EXECUTABLE} -DSETUP=${CMAKE_CURRENT_SOURCE_DIR}/setup.py -DPREFIX=${CMAKE_INSTALL_PREFIX} -DWDIR=${CMAKE_CURRENT_SOURCE_DIR} -DVERSION=${VERSION} -P ${compiz_SOURCE_DIR}/compizconfig/cmake/exec_setup_py_with_destdir.cmake)")

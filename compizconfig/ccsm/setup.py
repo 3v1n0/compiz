@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys, os, glob
 import subprocess
@@ -48,15 +48,15 @@ class install (_install):
         # Update icon cache
         gtk_update_icon_cache = '''gtk-update-icon-cache -f -t \
 %s''' % icon_prefix
-        root_specified = len (filter (lambda s: s.startswith ("--root"),
-                                      sys.argv)) > 0
+        root_specified = len (list (filter (lambda s: s.startswith ("--root"),
+                                            sys.argv))) > 0
         if not root_specified:
-            print "Updating Gtk icon cache."
+            print ("Updating Gtk icon cache.")
             os.system (gtk_update_icon_cache)
             outputs.append (icon_theme_cache)
         else:
-            print '''*** Icon cache not updated. After install, run this:
-***     %s''' % gtk_update_icon_cache
+            print ('''*** Icon cache not updated. After install, run this:
+***     %s''' % gtk_update_icon_cache)
 
         length = 0
         if self.root:
@@ -64,7 +64,7 @@ class install (_install):
         if self.prefix:
             length += len (self.prefix)
         if length:
-            for counter in xrange (len (outputs)):
+            for counter in range (len (outputs)):
                 outputs[counter] = outputs[counter][length:]
         data = "\n".join (outputs)
         try:
@@ -114,10 +114,10 @@ class uninstall (_install):
         if self.prefix:
             prepend += self.prefix
         if len (prepend):
-            for counter in xrange (len (files)):
+            for counter in range (len (files)):
                 files[counter] = prepend + files[counter].rstrip ()
         for file in files:
-            print "Uninstalling %s" % file
+            print ("Uninstalling %s" % file)
             try:
                 os.unlink (file)
             except:
@@ -126,7 +126,7 @@ class uninstall (_install):
 ops = ("install", "build", "sdist", "uninstall", "clean")
 
 if len (sys.argv) < 2 or sys.argv[1] not in ops:
-    print "Please specify operation : %s" % " | ".join (ops)
+    print ("Please specify operation : %s" % " | ".join (ops))
     raise SystemExit
 
 prefix = None

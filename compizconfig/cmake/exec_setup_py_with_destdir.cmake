@@ -1,3 +1,4 @@
+set (PY_EXECUTABLE "" CACHE FORCE "Python executable")
 set (WDIR "" CACHE FORCE "Working Directory")
 set (PREFIX "" CACHE FORCE "Prefix")
 set (SETUP "" CACHE FORCE "Path to setup.py")
@@ -21,5 +22,5 @@ if (BUILD_DEB)
     set (EXTRAARGS "--install-layout=deb")
 endif (BUILD_DEB)
 
-execute_process (COMMAND python ${SETUP} install ${EXTRAARGS} --prefix=${PREFIX} --version=${VERSION} ${INSTALL_ROOT_ARGS}
+execute_process (COMMAND ${PY_EXECUTABLE} ${SETUP} install ${EXTRAARGS} --prefix=${PREFIX} --version=${VERSION} ${INSTALL_ROOT_ARGS}
 	 		   WORKING_DIRECTORY ${WDIR})
