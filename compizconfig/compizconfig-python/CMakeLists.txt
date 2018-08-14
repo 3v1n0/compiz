@@ -30,8 +30,8 @@ file (READ ${CMAKE_SOURCE_DIR}/VERSION COMPIZ_RELEASE_VERSION LIMIT 12 OFFSET 0)
 string (STRIP ${COMPIZ_RELEASE_VERSION} COMPIZ_RELEASE_VERSION)
 set (VERSION ${COMPIZ_RELEASE_VERSION})
 
-configure_file (${CMAKE_CURRENT_SOURCE_DIR}/compizconfig-python.pc.in
-                ${CMAKE_CURRENT_BINARY_DIR}/compizconfig-python.pc)
+configure_file (${CMAKE_CURRENT_SOURCE_DIR}/compizconfig-python3.pc.in
+                ${CMAKE_CURRENT_BINARY_DIR}/compizconfig-python3.pc)
 
 include_directories (${PYTHON_INCLUDE_DIRS}
 		     ${COMPIZCONFIG_INCLUDE_DIRS})
@@ -69,7 +69,7 @@ set (UNINSTALL_COMMAND "${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.p
 
 compiz_add_code_to_uninstall_target (${UNINSTALL_COMMAND} ${CMAKE_CURRENT_BINARY_DIR})
 
-install (FILES ${CMAKE_CURRENT_BINARY_DIR}/compizconfig-python.pc
+install (FILES ${CMAKE_CURRENT_BINARY_DIR}/compizconfig-python3.pc
          DESTINATION ${libdir}/pkgconfig)
 
 # This is probably not very portable, but we can't install using distutils

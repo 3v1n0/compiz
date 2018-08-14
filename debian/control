@@ -295,8 +295,6 @@ Multi-Arch: same
 Section: python
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${python3:Depends}, ${shlibs:Depends}
-Breaks: python-compizconfig
-Replaces: python-compizconfig
 Provides: ${python3:Provides}
 Description: Compizconfig bindings for Python
  Compiz Fusion is the result of the re-unification of the Beryl-project

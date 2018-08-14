@@ -4,7 +4,7 @@ libdir=@libdir@
 includedir=@includedir@
 pyexecdir=@pyexecdir@
 
-Name: compizconfig-python
+Name: compizconfig-python3
 Version: @VERSION@
 Description: Compiz configuration system bindings
 
