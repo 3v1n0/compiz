@@ -3,34 +3,20 @@ set (CMAKE_PROJECT_NAME compizconfig-python)
 
 # Get arch
 execute_process (COMMAND uname -p OUTPUT_VARIABLE PROC_ARCH)
+string (REPLACE "\n" "" PROC_ARCH ${PROC_ARCH})
 
-# Get Python Version
-execute_process (COMMAND python -c "import sys; print str (sys.version_info[0]) + '.' + str (sys.version_info[1])"
-		 OUTPUT_VARIABLE PY_VERSION)
-
-include (FindPkgConfig)
-pkg_check_modules (PYTHON python-2.7)
-
-# This is a workaround for a broken FindPythonLibs always finding the
-# wrong library version because PYTHON_LIBRARY is in the cache and
-# can't be overwritten
-string (REGEX REPLACE "^([0-9]+\\.[0-9]+).*" "\\1" PYTHON_CURRENT_VERSION ${PY_VERSION})
-string (REPLACE "." "" PYTHON_CURRENT_VERSION_NO_DOTS ${PYTHON_CURRENT_VERSION})
-find_library (PYTHON_LIBRARY_LOCAL
-	      NAMES python${PYTHON_CURRENT_VERSION_NO_DOTS} python${PYTHON_CURRENT_VERSION}
-	      PATH_SUFFIXES python${PYTHON_CURRENT_VERSION}/config)
+find_package (PythonInterp 3.0 REQUIRED)
+find_package (PythonLibs 3.0 REQUIRED)
 
 set (COMPIZCONFIG_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/compizconfig/libcompizconfig/include)
 
-string (REPLACE "\n" "" PROC_ARCH ${PROC_ARCH})
-string (REPLACE "\n" "" PY_VERSION ${PY_VERSION})
-
+set (PY_VERSION "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
 set (PY_BUILD_DIR lib.linux-${PROC_ARCH}-${PY_VERSION})
 set (PY_SCRIPTS_DIR scripts-${PY_VERSION})
 set (PY_COMPIZCONFIG_SRC ${CMAKE_CURRENT_BINARY_DIR}/compizconfig.c)
 set (PY_COMPIZCONFIG_CYTHON ${CMAKE_CURRENT_SOURCE_DIR}/src/compizconfig.pyx)
 
-find_program(CYTHON_BIN cython)
+find_program(CYTHON_BIN cython3)
 if(NOT CYTHON_BIN)
   message(FATAL_ERROR "Can not build because cython binary not found.")
 endif()
@@ -43,9 +29,6 @@ add_custom_command (OUTPUT ${PY_COMPIZCONFIG_SRC}
 file (READ ${CMAKE_SOURCE_DIR}/VERSION COMPIZ_RELEASE_VERSION LIMIT 12 OFFSET 0)
 string (STRIP ${COMPIZ_RELEASE_VERSION} COMPIZ_RELEASE_VERSION)
 set (VERSION ${COMPIZ_RELEASE_VERSION})
-
-configure_file (${CMAKE_CURRENT_SOURCE_DIR}/compizconfig-python.pc.in
-                ${CMAKE_CURRENT_BINARY_DIR}/compizconfig-python.pc)
 
 include_directories (${PYTHON_INCLUDE_DIRS}
 		     ${COMPIZCONFIG_INCLUDE_DIRS})
@@ -76,15 +59,12 @@ set_target_properties (compizconfig_python_module
 		       compizconfig)
 
 target_link_libraries (compizconfig_python_module
-		       ${PYTHON_LIBRARY_LOCAL}
+		       ${PYTHON_LIBRARIES}
 		       compizconfig)
 
-set (UNINSTALL_COMMAND "python ${CMAKE_CURRENT_SOURCE_DIR}/setup.py uninstall --prefix=${CMAKE_INSTALL_PREFIX} --version=${VERSION}")
+set (UNINSTALL_COMMAND "${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py uninstall --prefix=${CMAKE_INSTALL_PREFIX} --version=${VERSION}")
 
 compiz_add_code_to_uninstall_target (${UNINSTALL_COMMAND} ${CMAKE_CURRENT_BINARY_DIR})
-
-install (FILES ${CMAKE_CURRENT_BINARY_DIR}/compizconfig-python.pc
-         DESTINATION ${libdir}/pkgconfig)
 
 # This is probably not very portable, but we can't install using distutils
 # as we cannot build with it safely
@@ -102,12 +82,11 @@ install (TARGETS compizconfig_python_module
 
 install (CODE
 	 "message (\"Installing python files\")
-	  execute_process (COMMAND cmake -DSETUP=${CMAKE_CURRENT_SOURCE_DIR}/setup.py -DPREFIX=${CMAKE_INSTALL_PREFIX} -DWDIR=${CMAKE_CURRENT_BINARY_DIR} -DVERSION=${VERSION} -P ${compiz_SOURCE_DIR}/compizconfig/cmake/exec_setup_py_with_destdir.cmake)")
+	  execute_process (COMMAND cmake -DPY_EXECUTABLE=${PYTHON_EXECUTABLE} -DSETUP=${CMAKE_CURRENT_SOURCE_DIR}/setup.py -DPREFIX=${CMAKE_INSTALL_PREFIX} -DWDIR=${CMAKE_CURRENT_BINARY_DIR} -DVERSION=${VERSION} -P ${compiz_SOURCE_DIR}/compizconfig/cmake/exec_setup_py_with_destdir.cmake)")
 
 if (COMPIZ_BUILD_TESTING)
 
         find_program (BASH_EXECUTABLE bash)
-	find_program (PYTHON_EXECUTABLE python)
 	mark_as_advanced (FORCE PYTHON_EXECUTABLE)
 
 	file (GLOB PYTHON_TESTS "tests/test_*.py")

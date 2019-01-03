@@ -5,7 +5,6 @@ export COMPIZ_DEB_BUILD=1
 
 include /usr/share/dpkg/architecture.mk
 
-python2_version := $(shell pyversions --requested --version debian/control)
 gles2_architectures := armel armhf
 build_testing := OFF
 
@@ -59,11 +58,6 @@ endif
 	# work around having a file with a conflicted special name (#1156294)
 	cp debian/compizconfig debian/tmp/config
 
-	# accommodate Python's just-gotta-be-different approach to multi-arch
-	python2_dir=debian/tmp/usr/lib/python$(python2_version)/dist-packages; \
-	mv $${python2_dir}/compizconfig.so \
-	   $${python2_dir}/compizconfig.$(DEB_HOST_MULTIARCH).so
-
 	dh_install --fail-missing
 
 	# remove the compizconfig dev file from compiz-dev
@@ -76,5 +70,5 @@ override_dh_auto_test:
 	dh_auto_test --no-parallel
 
 %:
-	dh $@ --parallel --with python2,migrations,translations
+	dh $@ --parallel --with python3,migrations,translations
 

@@ -1,3 +1,4 @@
+# cython: c_string_type=str, c_string_encoding=ascii
 '''
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public License
@@ -770,10 +771,10 @@ cdef class Plugin:
             if t == TypeString and i.forString.extensible:
                 self.hasExtendedString = True
 
-            if not self.ranking.has_key (ccsSettingGetName (sett)):
+            if ccsSettingGetName (sett) not in self.ranking:
                 self.ranking[ccsSettingGetName (sett)] = rank
                 rank = rank + 1
-            
+
             setlist = setlist.next
 
         self.loaded = True
@@ -1136,7 +1137,7 @@ cdef class Context:
                 cat = ''
             else:
                 cat = ccsPluginGetCategory (pl)
-            if not self.categories.has_key (cat):
+            if cat not in self.categories:
                 self.categories[cat] = []
             self.categories[cat].append (self.plugins[ccsPluginGetName (pl)])
             pll = pll.next
