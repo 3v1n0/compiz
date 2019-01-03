@@ -1,3 +1,10 @@
+compiz (1:0.9.13.1+19.04.20190103-0ubuntu1) disco; urgency=medium
+
+  [ Alberts Muktupāvels ]
+  * Port CCSM to Python 3. (LP: #1004592, #1310794)
+
+ -- Dmitry Shachnev <mitya57@ubuntu.com>  Thu, 03 Jan 2019 18:56:40 +0000
+
 compiz (1:0.9.13.1+18.10.20180930-0ubuntu2) disco; urgency=medium
 
   * No-change rebuild against latest protobuf
