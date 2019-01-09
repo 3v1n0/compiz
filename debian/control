@@ -151,7 +151,7 @@ Depends: ${shlibs:Depends},
          ${python3:Depends},
          compiz-plugins-default (= ${binary:Version}),
          gsettings-desktop-schemas,
-         gnome-settings-daemon-schemas (>= 3.4.2-0ubuntu9),
+         gnome-settings-daemon-common (>= 3.4.2-0ubuntu9),
          python3-gi
 Recommends: gnome-system-monitor | mate-system-monitor,
 Replaces: compiz-plugins-main (<= 1:0.9.8),
