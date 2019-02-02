@@ -68,7 +68,7 @@ class CellRendererColor(Gtk.CellRenderer):
                 'color markup text',
                 'The color as markup like this: #rrrrggggbbbbaaaa',
                 '#0000000000000000',
-                GObject.PARAM_READWRITE)
+                GObject.ParamFlags.READWRITE)
     }
 
     _text  = '#0000000000000000'
