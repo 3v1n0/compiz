@@ -1711,7 +1711,7 @@ class PluginWindow(Gtk.ScrolledWindow):
             return
 
         self._ncols = ncols
-        GObject.idle_add(self.idle_rebuild_boxes)
+        GLib.idle_add(self.idle_rebuild_boxes)
 
     def idle_rebuild_boxes(self):
         self.rebuild_boxes()

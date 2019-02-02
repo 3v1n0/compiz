@@ -216,9 +216,9 @@ class IdleSettingsParser:
             return False
         
         if len (self.CategoryLoadIconsList) == 0: # If we're done loading icons
-            GObject.idle_add (self.ParseSettings)
+            GLib.idle_add (self.ParseSettings)
         else:
-            GObject.idle_add (self.LoadCategoryIcons)
+            GLib.idle_add (self.LoadCategoryIcons)
         
         return False
     
