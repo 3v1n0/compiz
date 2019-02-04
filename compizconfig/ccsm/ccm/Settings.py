@@ -20,12 +20,13 @@
 #          Christopher Williams (christopherw@verizon.net)
 # Copyright (C) 2007 Quinn Storm
 
+from gi.repository import GLib
 from gi.repository import Gtk
 from gi.repository import Gdk
 
 from ccm.Constants import TableDef, TableX, KeyModifier, Edges, ImageStock, FilterName, FilterLongDesc, FilterValue, FilterAll, DataDir
 from ccm.Conflicts import KeyConflict, ButtonConflict, EdgeConflict
-from ccm.Widgets import CellRendererColor, ModifierSelector, SingleEdgeSelector, KeyGrabber, MatchButton, FileButton, ErrorDialog, WarningDialog
+from ccm.Widgets import CellRendererColor, ModifierSelector, SingleEdgeSelector, KeyGrabber, MatchButton, FileButton, ErrorDialog
 from ccm.Utils import Image, ActionImage, SizedButton, GlobalUpdater, PureVirtualError, SettingKeyFunc, EnumSettingKeyFunc, HasOnlyType, GetSettings, GetAcceleratorName
 
 from cgi import escape as protect_pango_markup
@@ -1237,6 +1238,7 @@ class ButtonSetting (EditableActionSetting):
         dlg.vbox.show_all ()
         ShowHideBox (checkButton, box, dlg)
         ret = dlg.run ()
+        button = buttonCombo.get_active_text ()
         dlg.destroy ()
 
         if ret != Gtk.ResponseType.OK:
@@ -1248,7 +1250,6 @@ class ButtonSetting (EditableActionSetting):
 
         edges = edgeSelector.current
         modifiers = modifierSelector.current
-        button = buttonCombo.get_active_text ()
 
         edges = edges.split ("|")
         if len (edges):
@@ -1268,10 +1269,20 @@ class ButtonSetting (EditableActionSetting):
     def ButtonEdited (self, button):
         '''Button edited callback'''
         if button == "Button1":
-            warning = WarningDialog (self.Widget.get_toplevel (),
-                                     _("Using Button1 without modifiers can \
+
+            warning = Gtk.MessageDialog (transient_for = self.Widget.get_toplevel (),
+                                         destroy_with_parent = True,
+                                         message_type = Gtk.MessageType.WARNING,
+                                         buttons = Gtk.ButtonsType.YES_NO,
+                                         title = _("Warning"))
+
+            warning.set_markup (GLib.markup_escape_text (_("Using Button1 without modifiers can \
 prevent any left click and thus break your configuration. Do you really want \
-to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
+to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc))
+
+            warning.set_position (Gtk.WindowPosition.CENTER)
+            warning.connect_after ("response", lambda *args: warning.destroy ())
+
             response = warning.run ()
             if response != Gtk.ResponseType.YES:
                 return
