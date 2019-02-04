@@ -1,3 +1,16 @@
+compiz (1:0.9.13.1+19.04.20190204.1-0ubuntu1) disco; urgency=medium
+
+  [ Alberts Muktupāvels ]
+  * Fix visual-bell-type GSettings values.
+  * Fix some deprecation warnings.
+  * Fix regression in CCSM from Python 3 port. (LP: #1814462)
+
+  [ Khurshid Alam ]
+  * Transition from gnome-settings-daemon-schemas to gnome-settings-
+    daemon-common. (LP: #1811118)
+
+ -- Dmitry Shachnev <mitya57@ubuntu.com>  Mon, 04 Feb 2019 21:17:20 +0000
+
 compiz (1:0.9.13.1+19.04.20190103-0ubuntu1) disco; urgency=medium
 
   [ Alberts Muktupāvels ]
