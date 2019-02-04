@@ -1354,22 +1354,6 @@ class ErrorDialog (Gtk.MessageDialog):
         self.show_all ()
         self.connect ("response", lambda *args: self.destroy ())
 
-# Warning dialog
-#
-class WarningDialog (Gtk.MessageDialog):
-    '''Display a warning dialog'''
-
-    def __init__ (self, parent, message):
-        Gtk.MessageDialog.__init__ (self, parent,
-                                    Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                    Gtk.MessageType.WARNING,
-                                    Gtk.ButtonsType.YES_NO)
-        self.set_position (Gtk.WindowPosition.CENTER)
-        self.set_markup (message)
-        self.set_title (_("Warning"))
-        self.set_transient_for (parent)
-        self.connect_after ("response", lambda *args: self.destroy ())
-
 # First run dialog providing a user warning.
 #
 class FirstRun (Gtk.MessageDialog):
