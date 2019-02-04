@@ -63,9 +63,6 @@ Copyright: 2006, Novell, Inc.
 License: GPL-2+
 
 Files: include/*
-       kde/window-decorator-kde4/kdecorationbridge.h
-       kde/window-decorator-kde4/kdecoration_plugins.*
-       kde/window-decorator-kde4/paintredirector.*
 Copyright: 2010-2012, Canonical Ltd
            2010, Sam Spilsbury <smspillaz@gmail.com>
            2008, Dennis Kasprzyk <onestone@opencompositing.org>

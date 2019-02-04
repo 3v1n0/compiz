@@ -40,8 +40,6 @@ plugins/imgjpeg/imgjpeg.xml.in
 plugins/imgpng/imgpng.xml.in
 plugins/imgsvg/imgsvg.xml.in
 plugins/inotify/inotify.xml.in
-plugins/kde/kde.xml.in
-plugins/kdecompat/kdecompat.xml.in
 plugins/loginout/loginout.xml.in
 plugins/mag/mag.xml.in
 plugins/matecompat/matecompat.xml.in
@@ -95,4 +93,3 @@ plugins/wobbly/wobbly.xml.in
 plugins/workarounds/workarounds.xml.in
 plugins/workspacenames/workspacenames.xml.in
 src/main.cpp
-

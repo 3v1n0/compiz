@@ -1845,7 +1845,7 @@ static const PluginEventInfo watchedScreenPlugins[] =
 
 static const PluginEventInfo watchedWindowPlugins[] =
 {
-    {"kdecompat", "slide"},
+    {"slide"},
 };
 
 void
