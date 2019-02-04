@@ -68,7 +68,7 @@ class CellRendererColor(Gtk.CellRenderer):
                 'color markup text',
                 'The color as markup like this: #rrrrggggbbbbaaaa',
                 '#0000000000000000',
-                GObject.PARAM_READWRITE)
+                GObject.ParamFlags.READWRITE)
     }
 
     _text  = '#0000000000000000'
@@ -395,9 +395,9 @@ class ScrolledList(Gtk.ScrolledWindow):
 #
 class ModifierSelector (Gtk.DrawingArea):
 
-    __gsignals__    = {"added" : (GObject.SIGNAL_RUN_FIRST,
+    __gsignals__    = {"added" : (GObject.SignalFlags.RUN_FIRST,
                                     GObject.TYPE_NONE, [GObject.TYPE_STRING]),
-                       "removed" : (GObject.SIGNAL_RUN_FIRST,
+                       "removed" : (GObject.SignalFlags.RUN_FIRST,
                                     GObject.TYPE_NONE, [GObject.TYPE_STRING])}
 
     _current = []
@@ -520,7 +520,7 @@ class ModifierSelector (Gtk.DrawingArea):
 #
 class EdgeSelector (Gtk.DrawingArea):
 
-    __gsignals__    = {"clicked" : (GObject.SIGNAL_RUN_FIRST,
+    __gsignals__    = {"clicked" : (GObject.SignalFlags.RUN_FIRST,
                                     GObject.TYPE_NONE, (GObject.TYPE_STRING, GObject.TYPE_PYOBJECT,))}
 
     _base_surface   = None
@@ -951,10 +951,10 @@ class Popup (Gtk.Window):
 #
 class KeyGrabber (Gtk.Button):
 
-    __gsignals__    = {"changed" : (GObject.SIGNAL_RUN_FIRST,
+    __gsignals__    = {"changed" : (GObject.SignalFlags.RUN_FIRST,
                                     GObject.TYPE_NONE,
                                     [GObject.TYPE_INT, Gdk.ModifierType]),
-                       "current-changed" : (GObject.SIGNAL_RUN_FIRST,
+                       "current-changed" : (GObject.SignalFlags.RUN_FIRST,
                                     GObject.TYPE_NONE,
                                     [GObject.TYPE_INT, Gdk.ModifierType])}
 
@@ -1035,7 +1035,7 @@ class KeyGrabber (Gtk.Button):
 #
 class MatchButton(Gtk.Button):
 
-    __gsignals__    = {"changed" : (GObject.SIGNAL_RUN_FIRST,
+    __gsignals__    = {"changed" : (GObject.SignalFlags.RUN_FIRST,
                                     GObject.TYPE_NONE,
                                     [GObject.TYPE_STRING])}
 
@@ -1213,7 +1213,7 @@ class MatchButton(Gtk.Button):
         dlg.destroy ()
 
 class FileButton (Gtk.Button):
-    __gsignals__    = {"changed" : (GObject.SIGNAL_RUN_FIRST,
+    __gsignals__    = {"changed" : (GObject.SignalFlags.RUN_FIRST,
                                     GObject.TYPE_NONE,
                                     [GObject.TYPE_STRING])}
     _directory = False
@@ -1410,10 +1410,10 @@ class FirstRun (Gtk.MessageDialog):
 #
 class PluginButton (Gtk.HBox):
 
-    __gsignals__    = {"clicked"   : (GObject.SIGNAL_RUN_FIRST,
+    __gsignals__    = {"clicked"   : (GObject.SignalFlags.RUN_FIRST,
                                       GObject.TYPE_NONE,
                                       []),
-                       "activated" : (GObject.SIGNAL_RUN_FIRST,
+                       "activated" : (GObject.SignalFlags.RUN_FIRST,
                                       GObject.TYPE_NONE,
                                       [])}
 
@@ -1612,7 +1612,7 @@ class CategoryBox(Gtk.VBox):
 # Plugin Window
 #
 class PluginWindow(Gtk.ScrolledWindow):
-    __gsignals__    = {"show-plugin" : (GObject.SIGNAL_RUN_FIRST,
+    __gsignals__    = {"show-plugin" : (GObject.SignalFlags.RUN_FIRST,
                                         GObject.TYPE_NONE,
                                         [GObject.TYPE_PYOBJECT])}
 
@@ -1711,7 +1711,7 @@ class PluginWindow(Gtk.ScrolledWindow):
             return
 
         self._ncols = ncols
-        GObject.idle_add(self.idle_rebuild_boxes)
+        GLib.idle_add(self.idle_rebuild_boxes)
 
     def idle_rebuild_boxes(self):
         self.rebuild_boxes()

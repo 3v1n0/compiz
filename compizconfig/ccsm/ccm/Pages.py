@@ -48,7 +48,7 @@ CurrentUpdater = None
 # Generic Page
 #
 class GenericPage(GObject.GObject):
-    __gsignals__    = {"go-back" : (GObject.SIGNAL_RUN_FIRST,
+    __gsignals__    = {"go-back" : (GObject.SignalFlags.RUN_FIRST,
                                     GObject.TYPE_NONE,
                                     [])}
 
@@ -820,7 +820,7 @@ class ProfileBackendPage(object):
         return False
 
     def ProfileChangedAddTimeout(self, widget):
-        GObject.timeout_add (500, self.ProfileChanged, widget)
+        GLib.timeout_add (500, self.ProfileChanged, widget)
 
     def CreateFilter(self, chooser):
         filter = Gtk.FileFilter()
@@ -953,7 +953,7 @@ class ProfileBackendPage(object):
         return False
 
     def BackendChangedAddTimeout(self, widget):
-        GObject.timeout_add (500, self.BackendChanged, widget)
+        GLib.timeout_add (500, self.BackendChanged, widget)
 
 # Plugin List Page
 #

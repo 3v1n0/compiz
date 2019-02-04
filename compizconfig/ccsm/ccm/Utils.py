@@ -209,16 +209,16 @@ class IdleSettingsParser:
         nCategories = len (main.MainPage.RightWidget._boxes)
         self.CategoryLoadIconsList = list(range(3, nCategories)) # Skip the first 3
 
-        GObject.timeout_add (150, self.Wait)
+        GLib.timeout_add (150, self.Wait)
 
     def Wait(self):
         if not self.PluginList:
             return False
         
         if len (self.CategoryLoadIconsList) == 0: # If we're done loading icons
-            GObject.idle_add (self.ParseSettings)
+            GLib.idle_add (self.ParseSettings)
         else:
-            GObject.idle_add (self.LoadCategoryIcons)
+            GLib.idle_add (self.LoadCategoryIcons)
         
         return False
     
@@ -231,7 +231,7 @@ class IdleSettingsParser:
 
         self.PluginList.remove (self.PluginList[0])
 
-        GObject.timeout_add (200, self.Wait)
+        GLib.timeout_add (200, self.Wait)
 
         return False
 
@@ -249,7 +249,7 @@ class IdleSettingsParser:
 
         self.CategoryLoadIconsList.remove (self.CategoryLoadIconsList[0])
 
-        GObject.timeout_add (150, self.Wait)
+        GLib.timeout_add (150, self.Wait)
 
         return False
 
@@ -264,7 +264,7 @@ class Updater:
     def SetContext (self, context):
         self.Context = context
 
-        GObject.timeout_add (2000, self.Update)
+        GLib.timeout_add (2000, self.Update)
 
     def Append (self, widget):
         reference = weakref.ref(widget)
