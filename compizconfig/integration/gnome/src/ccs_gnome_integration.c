@@ -302,7 +302,7 @@ ccsGNOMEIntegrationBackendReadOptionIntoSetting (CCSIntegration *integration,
 		{
 		    Bool fullscreen;
 
-		    fullscreen = strcmp (value, "fullscreen") == 0;
+		    fullscreen = strcmp (value, "fullscreen-flash") == 0;
 		    ccsSetBool (setting, fullscreen, TRUE);
 		    ret = TRUE;
 		}
@@ -549,7 +549,7 @@ ccsGNOMEIntegrationBackendWriteOptionFromSetting (CCSIntegration *integration,
 	    }
 	    else if (strcmp (settingName, "fullscreen_visual_bell") == 0)
 	    {
-		const char *newValueString = v->value.asBool ? "fullscreen" : "frame_flash";
+		const char *newValueString = v->value.asBool ? "fullscreen-flash" : "frame-flash";
 		newValue->value.asString = strdup (newValueString);
 		type = TypeString;
 

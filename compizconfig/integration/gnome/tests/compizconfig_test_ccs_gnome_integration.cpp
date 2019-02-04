@@ -390,7 +390,7 @@ TEST_F (CCSGNOMEIntegrationTestReadIntegrated, TestReadInSpecialOptionFullscreen
 {
     const std::string settingName ("fullscreen_visual_bell");
     CCSSettingValue   *v = MakeSettingValue ();
-    v->value.asString = strdup ("fullscreen");
+    v->value.asString = strdup ("fullscreen-flash");
 
     mIntegratedSetting = createIntegratedSettingCompositionFromMock (MOCK_PLUGIN,
 								     settingName,
@@ -791,7 +791,7 @@ TEST_F (CCSGNOMEIntegrationTestWriteIntegrated, TestWriteFullscreenVisualBell)
     CCSSettingInfo                      info;
 
     compizValue->value.asBool = TRUE;
-    gnomeValue->value.asString = strdup ("fullscreen");
+    gnomeValue->value.asString = strdup ("fullscreen-flash");
 
     mIntegratedSetting = createIntegratedSettingCompositionFromMock (MOCK_PLUGIN,
 								     settingName,
