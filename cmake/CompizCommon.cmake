@@ -1,5 +1,3 @@
-cmake_minimum_required (VERSION 2.8.12)
-
 include (FindPkgConfig)
 
 if ("${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
