@@ -30,7 +30,7 @@ if (BUILD_GNOME)
 		       ${_keybindings_files_translated})
 
     install (
-	FILES ${_keybinding_files_translated}
+	FILES ${_keybindings_files_translated}
 	DESTINATION ${datadir}/gnome-control-center/keybindings
     )
 

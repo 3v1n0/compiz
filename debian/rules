@@ -51,10 +51,6 @@ endif
         # remove acceptance test binary
 	rm -f debian/tmp/usr/bin/compiz_autopilot_acceptance_tests
 
-	# ugly hack to install xml files
-	mkdir -p debian/tmp/usr/share/gnome-control-center/keybindings
-	find */gtk/gnome -name *.xml | xargs cp -at debian/tmp/usr/share/gnome-control-center/keybindings/
-
 	# work around having a file with a conflicted special name (#1156294)
 	cp debian/compizconfig debian/tmp/config
 
