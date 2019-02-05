@@ -37,27 +37,6 @@ if (USE_GTK)
             endif (LIBMETACITY_FOUND)
         endif (USE_METACITY)
 
-	if (USE_GNOME)
-	    compiz_pkg_check_modules (GNOME_WINDOW_SETTINGS
-		gnome-window-settings-2.0
-		gnome-desktop-2.0
-	    )
-
-	    if (GNOME_WINDOW_SETTINGS_FOUND)
-	        exec_program (${PKG_CONFIG_EXECUTABLE} 
-		  ARGS "--variable=prefix gnome-window-settings-2.0" 
-		  OUTPUT_VARIABLE windowsettingsdatadir
-		)
-		set (windowsettingsdatadir ${windowsettingsdatadir}/share)
-		exec_program (${PKG_CONFIG_EXECUTABLE} 
-		  ARGS "--variable=libdir gnome-window-settings-2.0"
-		  OUTPUT_VARIABLE windowsettingslibdir
-		)
-	    else (GNOME_WINDOW_SETTINGS_FOUND)
-		compiz_set (USE_GNOME 0)
-	    endif (GNOME_WINDOW_SETTINGS_FOUND)
-	endif (USE_GNOME)
-
     else (GTK_WINDOW_DECORATOR_FOUND)
 	compiz_set (USE_GTK 0)
     endif (GTK_WINDOW_DECORATOR_FOUND)
