@@ -8,6 +8,8 @@ if (POLICY CMP0077)
   cmake_policy (SET CMP0077 NEW)
 endif ()
 
+find_package (PkgConfig 0.29.1 REQUIRED)
+
 if ("${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
     message (SEND_ERROR "Building in the source directory is not supported.")
     message (FATAL_ERROR "Please remove the created \"CMakeCache.txt\" file, the \"CMakeFiles\" directory and create a build directory and call \"${CMAKE_COMMAND} <path to the sources>\".")
