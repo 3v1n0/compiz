@@ -5,6 +5,5 @@ postinst/convert-files/*.convert usr/lib/compiz/migration/
 usr/bin/gtk-window-decorator
 usr/lib/*/compizconfig/backends/libgsettings.so
 usr/lib/*/libcompizconfig_gsettings_backend.so
-usr/share/applications/compiz.desktop usr/share/gnome/wm-properties/
 usr/share/glib-2.0/schemas/*.xml
 usr/share/gnome-control-center
