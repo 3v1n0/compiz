@@ -1,11 +1,11 @@
 cmake_minimum_required (VERSION 3.10.0)
 
 if (POLICY CMP0072)
-  cmake_policy (SET CMP0072 OLD)
+    cmake_policy (SET CMP0072 OLD)
 endif ()
 
 if (POLICY CMP0077)
-  cmake_policy (SET CMP0077 NEW)
+    cmake_policy (SET CMP0077 NEW)
 endif ()
 
 find_package (PkgConfig 0.29.1 REQUIRED)
