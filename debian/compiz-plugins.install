@@ -42,8 +42,6 @@ usr/lib/*/compiz/*imgsvg.*
 usr/share/compiz/*imgsvg.*
 usr/lib/*/compiz/*inotify.*
 usr/share/compiz/*inotify.*
-usr/lib/*/compiz/*kdecompat.*
-usr/share/compiz/*kdecompat.*
 usr/lib/*/compiz/*mag.*
 usr/share/compiz/*mag.*
 usr/share/compiz/mag

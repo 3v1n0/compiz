@@ -121,7 +121,6 @@ typedef enum
 
 typedef enum
 {
-    WatchedPluginKDECompat,
     WatchedWindowPluginNum
 } WatchedWindowPlugin;
 

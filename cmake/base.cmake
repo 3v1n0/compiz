@@ -6,7 +6,6 @@ function (_print_configure_results)
     compiz_print_result_message ("gtk window decorator" USE_GTK)
     compiz_print_result_message ("metacity theme support" USE_METACITY)
     compiz_print_result_message ("gnome" USE_GNOME)
-    compiz_print_result_message ("kde4 window decorator" USE_KDE4)
 
     compiz_print_result_message ("protocol buffers" USE_PROTOBUF)
     compiz_print_result_message ("file system change notifications" HAVE_INOTIFY)
