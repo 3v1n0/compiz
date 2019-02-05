@@ -13,7 +13,7 @@ if (POLICY CMP0077)
   cmake_policy (SET CMP0077 NEW)
 endif ()
 
-find_package (PkgConfig REQUIRED)
+find_package (PkgConfig 0.29.1 REQUIRED)
 
 set (CMAKE_MODULE_PATH_ORIG ${CMAKE_MODULE_PATH})
 set (COMPIZ_CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
