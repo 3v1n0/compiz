@@ -10,26 +10,20 @@ set (
 )
 
 # Detect global schemas install dir
-find_program (PKG_CONFIG_TOOL pkg-config)
-
 get_property (GSETTINGS_GLOBAL_INSTALL_DIR_SET
 	      GLOBAL
 	      PROPERTY GSETTINGS_GLOBAL_INSTALL_DIR
 	      SET)
 
-if (PKG_CONFIG_TOOL AND NOT GSETTINGS_GLOBAL_INSTALL_DIR_SET)
-
-    mark_as_advanced (FORCE PKG_CONFIG_TOOL)
-
-    # find out where schemas need to go if we are installing them systemwide
-    execute_process (COMMAND ${PKG_CONFIG_TOOL} glib-2.0 --variable prefix  OUTPUT_VARIABLE GSETTINGS_GLIB_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+if (PKG_CONFIG_FOUND AND NOT GSETTINGS_GLOBAL_INSTALL_DIR_SET)
+    pkg_get_variable (GSETTINGS_GLIB_PREFIX glib-2.0 prefix)
     set (GSETTINGS_GLOBAL_INSTALL_DIR "${GSETTINGS_GLIB_PREFIX}/share/glib-2.0/schemas/")
 
     set_property (GLOBAL
 		  PROPERTY GSETTINGS_GLOBAL_INSTALL_DIR
 		  ${GSETTINGS_GLOBAL_INSTALL_DIR})
 
-endif (PKG_CONFIG_TOOL AND NOT GSETTINGS_GLOBAL_INSTALL_DIR_SET)
+endif (PKG_CONFIG_FOUND AND NOT GSETTINGS_GLOBAL_INSTALL_DIR_SET)
 
 function (compiz_add_install_recompile_gsettings_schemas _schemadir_user)
 
@@ -57,16 +51,14 @@ function (compiz_add_install_recompile_gsettings_schemas _schemadir_user)
 endfunction (compiz_add_install_recompile_gsettings_schemas)
 
 function (compiz_install_gsettings_schema _src _dst)
-    find_program (PKG_CONFIG_TOOL pkg-config)
     find_program (GLIB_COMPILE_SCHEMAS glib-compile-schemas)
-    mark_as_advanced (FORCE PKG_CONFIG_TOOL)
     mark_as_advanced (GLIB_COMPILE_SCHEMAS)
 
     # find out where schemas need to go if we are installing them systemwide
-    execute_process (COMMAND ${PKG_CONFIG_TOOL} glib-2.0 --variable prefix  OUTPUT_VARIABLE GSETTINGS_GLIB_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+    pkg_get_variable (GSETTINGS_GLIB_PREFIX glib-2.0 prefix)
     SET (GSETTINGS_GLOBAL_INSTALL_DIR "${GSETTINGS_GLIB_PREFIX}/share/glib-2.0/schemas/")
 
-    if (PKG_CONFIG_TOOL AND
+    if (PKG_CONFIG_FOUND AND
 	GLIB_COMPILE_SCHEMAS AND NOT
 	COMPIZ_DISABLE_SCHEMAS_INSTALL)
 
@@ -102,7 +94,7 @@ function (compiz_install_gsettings_schema _src _dst)
 	    compiz_add_install_recompile_gsettings_schemas (${_dst} ${GSETTINGS_GLOBAL_INSTALL_DIR})
 	endif (NOT COMPIZ_INHIBIT_ADD_INSTALL_RECOMPILE_RULE)
 
-    endif (PKG_CONFIG_TOOL AND
+    endif (PKG_CONFIG_FOUND AND
 	   GLIB_COMPILE_SCHEMAS AND NOT
 	   COMPIZ_DISABLE_SCHEMAS_INSTALL)
 endfunction ()

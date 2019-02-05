@@ -12,16 +12,10 @@ pkg_check_modules (XORG_SERVER
 		   xi)
 
 if (XORG_SERVER_FOUND)
-
-    execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=prefix xorg-gtest OUTPUT_VARIABLE _xorg_gtest_prefix)
-    execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=includedir xorg-gtest OUTPUT_VARIABLE _xorg_gtest_include_dir)
-    execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=sourcedir xorg-gtest OUTPUT_VARIABLE _xorg_gtest_source_dir)
-    execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=CPPflags xorg-gtest OUTPUT_VARIABLE _xorg_gtest_cflags)
-
-    string (STRIP ${_xorg_gtest_prefix} _xorg_gtest_prefix)
-    string (STRIP ${_xorg_gtest_include_dir} _xorg_gtest_include_dir)
-    string (STRIP ${_xorg_gtest_source_dir} _xorg_gtest_source_dir)
-    string (STRIP ${_xorg_gtest_cflags} _xorg_gtest_cflags)
+    pkg_get_variable (_xorg_gtest_prefix xorg-gtest prefix)
+    pkg_get_variable (_xorg_gtest_include_dir xorg-gtest includedir)
+    pkg_get_variable (_xorg_gtest_source_dir xorg-gtest sourcedir)
+    pkg_get_variable (_xorg_gtest_cflags xorg-gtest CPPflags)
 
     set (XORG_SERVER_GTEST_INCLUDES ${XORG_SERVER_INCLUDE_DIRS})
     set (XORG_SERVER_GTEST_LIBRARY_DIRS ${XORG_SERVER_LIBRARIES})
