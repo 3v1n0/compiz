@@ -1,3 +1,11 @@
+compiz (1:0.9.13.1+19.04.20190205-0ubuntu1) disco; urgency=medium
+
+  [ Alberts Muktupāvels ]
+  * Remove KDE support.
+  * Fix GNOME building.
+
+ -- Dmitry Shachnev <mitya57@ubuntu.com>  Tue, 05 Feb 2019 13:11:50 +0000
+
 compiz (1:0.9.13.1+19.04.20190204.1-0ubuntu1) disco; urgency=medium
 
   [ Alberts Muktupāvels ]
