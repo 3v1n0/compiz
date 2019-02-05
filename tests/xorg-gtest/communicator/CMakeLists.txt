@@ -1,5 +1,3 @@
-include (FindPkgConfig)
-
 pkg_check_modules (COMPIZ_XORG_GTEST_COMMUNICATOR x11)
 
 if (COMPIZ_XORG_GTEST_COMMUNICATOR_FOUND)

@@ -1,4 +1,3 @@
-include (FindPkgConfig)
 pkg_check_modules (COMPIZ_UNTEST REQUIRED gtk+-3.0 gl x11)
 
 add_executable (untest untest.c)

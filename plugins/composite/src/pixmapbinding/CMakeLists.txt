@@ -1,5 +1,3 @@
-include (FindPkgConfig)
-
 PKG_CHECK_MODULES (X11 x11)
 
 INCLUDE_DIRECTORIES (  

@@ -1,5 +1,3 @@
-include (FindPkgConfig)
-
 if ("${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
     message (SEND_ERROR "Building in the source directory is not supported.")
     message (FATAL_ERROR "Please remove the created \"CMakeCache.txt\" file, the \"CMakeFiles\" directory and create a build directory and call \"${CMAKE_COMMAND} <path to the sources>\".")
@@ -491,8 +489,6 @@ macro (compiz_add_plugins_in_folder folder)
 endmacro ()
 
 #### pkg-config handling
-
-include (FindPkgConfig)
 
 function (compiz_pkg_check_modules _var _req)
     if (NOT ${_var})
