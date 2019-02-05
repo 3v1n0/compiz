@@ -28,13 +28,6 @@ COMPIZ_PLUGIN_20090315 (notification, NotificationPluginVTable);
 
 const std::string IMAGE_DIR(".compiz/images");
 
-/* libnotify 0.7 introduced proper NOTIFY_CHECK_VERSION macro */
-#if defined(NOTIFY_CHECK_VERSION) && !defined(HAVE_LIBNOTIFY_0_6_1)
-#if NOTIFY_CHECK_VERSION(0,6,1)
-#define HAVE_LIBNOTIFY_0_6_1
-#endif
-#endif
-
 void
 NotificationScreen::logMessage (const char   *component,
 			  	CompLogLevel level,
@@ -65,9 +58,6 @@ NotificationScreen::logMessage (const char   *component,
 
     n = notify_notification_new (logLevel, message,
 				 iconUri.c_str ()
-#ifndef HAVE_LIBNOTIFY_0_6_1
-				 , NULL
-#endif				 
 				 );
 
     timeout = optionGetTimeout ();

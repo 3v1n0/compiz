@@ -1,5 +1,3 @@
-include (FindPkgConfig)
-
 if (BUILD_XORG_GTEST)
 
     include_directories (${compiz_SOURCE_DIR}/tests/shared
@@ -37,4 +35,3 @@ if (BUILD_XORG_GTEST)
                            compiz_decor_pixmap_requests)
 
 endif (BUILD_XORG_GTEST)
-

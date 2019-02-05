@@ -1,5 +1,3 @@
-include (FindPkgConfig)
-
 pkg_check_modules (X11_XI x11 xi xext)
 
 if (BUILD_XORG_GTEST AND X11_XI_FOUND)
@@ -38,4 +36,3 @@ if (BUILD_XORG_GTEST AND X11_XI_FOUND)
     #compiz_discover_tests (compiz_test_decor_acceptance WITH_XORG_GTEST)
 
 endif (BUILD_XORG_GTEST AND X11_XI_FOUND)
-

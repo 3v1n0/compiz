@@ -3,7 +3,15 @@
 #
 project (compiz C CXX)
 
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.10.0)
+
+if (POLICY CMP0072)
+    cmake_policy (SET CMP0072 OLD)
+endif ()
+
+if (POLICY CMP0077)
+    cmake_policy (SET CMP0077 NEW)
+endif ()
 
 set (CMAKE_MODULE_PATH_ORIG ${CMAKE_MODULE_PATH})
 set (COMPIZ_CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)

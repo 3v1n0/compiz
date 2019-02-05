@@ -1,5 +1,3 @@
-include (FindPkgConfig)
-
 compiz_pkg_check_modules (GSETTINGS_UTIL ${_deps})
 
 if (GSETTINGS_UTIL_FOUND)

@@ -1,5 +1,3 @@
-include (FindPkgConfig)
-
     set (_deps
 	glib-2.0>=2.20.0
 	gio-2.0>=2.25.0)

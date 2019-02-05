@@ -1,5 +1,3 @@
-include (FindPkgConfig)
-
 pkg_check_modules (COMPIZ_GLIB_INTEGRATION_TEST glibmm-2.4)
 
 if (COMPIZ_GLIB_INTEGRATION_TEST_FOUND)
