@@ -3344,7 +3344,7 @@ ccsSetPluginListAutoSort (CCSContext *context, Bool value)
 void
 ccsSetProfileDefault (CCSContext * context, const char *name)
 {
-    const char *globalProfileDir = SYSCONFDIR "/compizconfig";
+    const char *globalProfileDir = CONFIGDIR;
     CCSStringList availableInBackend = NULL;
     CCSStringList availableInSysconfDir = NULL;
 
@@ -4911,7 +4911,7 @@ ccsProcessUpgradeOnce (CCSContext	  *context,
     ccsFreeUpgrade (upgrade);
 }
 
-static const char * CCS_UPGRADE_PATH = DATADIR "/compizconfig/upgrades";
+static const char * CCS_UPGRADE_PATH = UPGRADESDIR;
 
 static void
 ccsApplyUnappliedUpgrades (CCSContext    *context,

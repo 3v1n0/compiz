@@ -4,6 +4,9 @@ set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${LIBCOMPIZCONFIG_CMAKE_MODULE_PATH}
 set (COMPIZCONFIG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/libcompizconfig/include)
 set (COMPIZCONFIG_LIBRARY_DIRS ${CMAKE_CURRENT_BINARY_DIR}/libcompizconfig)
 
+set (COMPIZCONFIG_CONFIG_DIR ${CMAKE_INSTALL_FULL_SYSCONFDIR}/compizconfig)
+set (COMPIZCONFIG_UPGRADES_DIR ${CMAKE_INSTALL_FULL_DATAROOTDIR}/compizconfig/upgrades)
+
 if (COMPIZ_PACKAGING_ENABLED)
     set (libcompizconfig_prefix ${CMAKE_INSTALL_PREFIX}                           CACHE PATH "prefix")
     set (libcompizconfig_libdir ${CMAKE_INSTALL_FULL_LIBDIR}                      CACHE PATH "libdir")

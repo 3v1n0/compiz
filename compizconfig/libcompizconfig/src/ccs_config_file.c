@@ -103,12 +103,12 @@ ccsReadGlobalConfig (ConfigOption option,
 
     /* check if the global config file exists - if it doesn't, exit
        to avoid it being created by ccsIniOpen */
-    fp = fopen (SYSCONFDIR "/compizconfig/config", "r");
+    fp = fopen (CONFIGDIR "/config", "r");
     if (!fp)
 	return FALSE;
     fclose (fp);
 
-    iniFile = ccsIniOpen (SYSCONFDIR "/compizconfig/config");
+    iniFile = ccsIniOpen (CONFIGDIR "/config");
     if (!iniFile)
 	return FALSE;
 
