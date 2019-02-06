@@ -958,23 +958,6 @@ macro (compiz_test _prefix _module _test)
 
 endmacro (compiz_test)
 
-#### optional file install
-
-function (compiz_opt_install_file _src _dst)
-    install (CODE
-        "message (\"-- Installing: ${_dst}\")
-         execute_process (
-	    COMMAND ${CMAKE_COMMAND} -E copy_if_different \"${_src}\" \"$ENV{DESTDIR}${_dst}\"
-	    RESULT_VARIABLE _result
-	    OUTPUT_QUIET ERROR_QUIET
-	 )
-	 if (_result)
-	     message (\"-- Failed to install: ${_dst}\")
-	 endif ()
-        "
-    )
-endfunction ()
-
 #### uninstall
 
 function (compiz_add_code_to_uninstall_target CODE WORKING_DIRECTORY)
