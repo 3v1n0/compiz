@@ -26,6 +26,9 @@
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
 #endif
+
+#include <dirent.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -92,23 +95,16 @@ getConfigFile (void)
 }
 
 static Bool
-ccsReadGlobalConfig (ConfigOption option,
-		     char         **value)
+ccsReadGlobalConfigFromFile (const char   *file,
+			     ConfigOption option,
+			     char         **value)
 {
     IniDictionary *iniFile;
     char          *entry = NULL;
     char          *section;
     Bool          ret;
-    FILE          *fp;
 
-    /* check if the global config file exists - if it doesn't, exit
-       to avoid it being created by ccsIniOpen */
-    fp = fopen (CONFIGDIR "/config.conf", "r");
-    if (!fp)
-	return FALSE;
-    fclose (fp);
-
-    iniFile = ccsIniOpen (CONFIGDIR "/config.conf");
+    iniFile = ccsIniOpen (file);
     if (!iniFile)
 	return FALSE;
 
@@ -142,6 +138,68 @@ ccsReadGlobalConfig (ConfigOption option,
     free (section);
     ccsIniClose (iniFile);
 
+    return ret;
+}
+
+static int
+configFilter (const struct dirent *entry)
+{
+    const char *suffix;
+    size_t suffixLen;
+    size_t nameLen;
+
+    suffix = ".conf";
+    suffixLen = strlen (suffix);
+    nameLen = strlen (entry->d_name);
+
+    if (nameLen < suffixLen)
+	return 0;
+
+    if (strcmp (entry->d_name + nameLen - suffixLen, suffix) == 0)
+	return 1;
+
+    return 0;
+}
+
+static Bool
+ccsReadGlobalConfig (ConfigOption option,
+		     char         **value)
+{
+    Bool ret;
+    const char *configDir;
+    struct dirent **nameList;
+    int num;
+    int i;
+
+    ret = FALSE;
+    configDir = CONFIGDIR;
+
+    num = scandir (configDir, &nameList, configFilter, alphasort);
+
+    if (num == -1)
+    {
+	ccsError ("error occurred during scandir(%s): %s", configDir, strerror (errno));
+	return FALSE;
+    }
+
+    for (i = 0; i < num; i++)
+    {
+	char *filename;
+
+	if (asprintf (&filename, "%s/%s", configDir, nameList[i]->d_name) == -1)
+	    continue;
+
+	ret = ccsReadGlobalConfigFromFile (filename, option, value);
+	free (filename);
+
+	if (ret)
+	    break;
+    }
+
+    for (i = 0; i < num; i++)
+	free (nameList[i]);
+    free (nameList);
+ 
     return ret;
 }
 
