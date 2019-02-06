@@ -1,4 +1,4 @@
-# cython: c_string_type=str, c_string_encoding=ascii
+# cython: c_string_type=str, c_string_encoding=ascii, language_level=3
 '''
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public License
