@@ -1,6 +1,14 @@
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.10.0)
 
-include (FindPkgConfig)
+if (POLICY CMP0072)
+    cmake_policy (SET CMP0072 OLD)
+endif ()
+
+if (POLICY CMP0077)
+    cmake_policy (SET CMP0077 NEW)
+endif ()
+
+find_package (PkgConfig 0.29.1 REQUIRED)
 
 if ("${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
     message (SEND_ERROR "Building in the source directory is not supported.")
@@ -493,8 +501,6 @@ macro (compiz_add_plugins_in_folder folder)
 endmacro ()
 
 #### pkg-config handling
-
-include (FindPkgConfig)
 
 function (compiz_pkg_check_modules _var _req)
     if (NOT ${_var})
