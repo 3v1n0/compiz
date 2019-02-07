@@ -1,3 +1,5 @@
+syntax="proto2";
+
 package metadata;
 
 option optimize_for = SPEED;
@@ -160,4 +162,3 @@ message Plugin
 
   repeated Extension extension = 3;
 }
-
