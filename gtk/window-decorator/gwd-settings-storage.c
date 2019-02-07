@@ -84,7 +84,6 @@ struct _GWDSettingsStorage
     GSettings   *metacity;
     GSettings   *marco;
 
-    gulong       gtk_decoration_layout_id;
     gulong       gtk_theme_name_id;
 };
 
@@ -100,43 +99,6 @@ enum
 static GParamSpec *storage_properties[LAST_PROP] = { NULL };
 
 G_DEFINE_TYPE (GWDSettingsStorage, gwd_settings_storage, G_TYPE_OBJECT)
-
-static gchar *
-button_layout_from_gtk_decoration_layout (const gchar *gtk_decoration_layout)
-{
-    gchar **sides = g_strsplit (gtk_decoration_layout, ":", -1);
-    gchar *button_layout;
-    gint i;
-
-    for (i = 0; sides[i]; i++) {
-        gchar **buttons = g_strsplit (sides[i], ",", -1);
-        gint j;
-
-        for (j = 0; buttons[j]; j++) {
-            const gchar *button = NULL;
-
-            if (g_strcmp0 (buttons[j], "icon") == 0)
-                button = "menu";
-            else if (g_strcmp0 (buttons[j], "menu") == 0)
-                button = "appmenu";
-
-            if (button) {
-                g_free (buttons[j]);
-                buttons[j] = g_strdup (button);
-            }
-        }
-
-        g_free (sides[i]);
-        sides[i] = g_strjoinv (",", buttons);
-
-        g_strfreev (buttons);
-    }
-
-    button_layout = g_strjoinv (":", sides);
-    g_strfreev (sides);
-
-    return button_layout;
-}
 
 static inline GSettings *
 get_settings_no_abort (const gchar *schema)
@@ -253,14 +215,6 @@ update_button_layout (GWDSettingsStorage *storage)
 
     if (storage->current_desktop == GWD_DESKTOP_MATE && storage->marco) {
         button_layout = g_settings_get_string (storage->marco, ORG_MATE_MARCO_GENERAL_BUTTON_LAYOUT);
-    } else if (storage->current_desktop == GWD_DESKTOP_GNOME_FLASHBACK) {
-        GtkSettings *settings = gtk_settings_get_default ();
-        gchar *gtk_decoration_layout = NULL;
-
-        g_object_get (settings, "gtk-decoration-layout", &gtk_decoration_layout, NULL);
-
-        button_layout = button_layout_from_gtk_decoration_layout (gtk_decoration_layout);
-        g_free (gtk_decoration_layout);
     } else if (storage->desktop) {
         button_layout = g_settings_get_string (storage->desktop, ORG_GNOME_DESKTOP_WM_PREFERENCES_BUTTON_LAYOUT);
     } else {
@@ -401,14 +355,6 @@ org_mate_marco_general_settings_changed (GSettings          *settings,
 }
 
 static void
-gtk_decoration_layout_changed (GtkSettings        *settings,
-                               GParamSpec         *pspec,
-                               GWDSettingsStorage *storage)
-{
-    update_button_layout (storage);
-}
-
-static void
 gtk_theme_name_changed (GtkSettings        *settings,
                         GParamSpec         *pspec,
                         GWDSettingsStorage *storage)
@@ -478,11 +424,6 @@ gwd_settings_storage_dispose (GObject *object)
     g_clear_object (&storage->desktop);
     g_clear_object (&storage->metacity);
     g_clear_object (&storage->marco);
-
-    if (storage->gtk_decoration_layout_id > 0) {
-        g_signal_handler_disconnect (settings, storage->gtk_decoration_layout_id);
-        storage->gtk_decoration_layout_id = 0;
-    }
 
     if (storage->gtk_theme_name_id > 0) {
         g_signal_handler_disconnect (settings, storage->gtk_theme_name_id);
@@ -559,10 +500,6 @@ gwd_settings_storage_init (GWDSettingsStorage *storage)
             storage->gwd = get_settings_no_abort (ORG_COMPIZ_GWD);
             storage->desktop = get_settings_no_abort (ORG_GNOME_DESKTOP_WM_PREFERENCES);
             storage->metacity = get_settings_no_abort (ORG_GNOME_METACITY_THEME);
-
-            storage->gtk_decoration_layout_id =
-                g_signal_connect (gtk_settings_get_default (), "notify::gtk-decoration-layout",
-                                  G_CALLBACK (gtk_decoration_layout_changed), storage);
 
             storage->gtk_theme_name_id =
                 g_signal_connect (gtk_settings_get_default (), "notify::gtk-theme-name",
