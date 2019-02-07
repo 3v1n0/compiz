@@ -1,3 +1,14 @@
+compiz (1:0.9.13.1+19.04.20190207.2-0ubuntu1) disco; urgency=medium
+
+  [ Alberts Muktupāvels ]
+  * Remove no longer needed button-layout workaround.
+  * Fix many PyGTKDeprecationWarning warnings.
+  * Fix protobuf warning by explicitly specifying proto2 syntax.
+  * Set Cython language_level directive.
+  * compizconfig: remove unused MATE integration
+
+ -- Dmitry Shachnev <mitya57@ubuntu.com>  Thu, 07 Feb 2019 14:33:04 +0000
+
 compiz (1:0.9.13.1+19.04.20190205.1-0ubuntu1) disco; urgency=medium
 
   [ Alberts Muktupāvels ]
