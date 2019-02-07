@@ -63,4 +63,4 @@ override_dh_auto_test:
 	dh_auto_test --no-parallel
 
 %:
-	dh $@ --parallel --with python3,migrations,translations
+	dh $@ --parallel --with python3,translations
