@@ -173,7 +173,7 @@ class PrettyButton (Gtk.Button):
 
 class Label(Gtk.Label):
     def __init__(self, value = "", wrap = 160):
-        Gtk.Label.__init__(self, value)
+        Gtk.Label.__init__(self, label=value)
         self.props.xalign = 0
         self.props.wrap_mode = Gtk.WrapMode.WORD
         self.props.max_width_chars = 20;

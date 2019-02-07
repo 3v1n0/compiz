@@ -149,7 +149,7 @@ class PluginView(Gtk.TreeView):
     def __init__(self, plugins):
         liststore = Gtk.ListStore(str, GdkPixbuf.Pixbuf, bool, object)
         self.model = liststore.filter_new()
-        Gtk.TreeView.__init__(self, self.model)
+        Gtk.TreeView.__init__(self, model=self.model)
 
         self.SelectionHandler = None
 
@@ -189,7 +189,7 @@ class PluginView(Gtk.TreeView):
 class GroupView(Gtk.TreeView):
     def __init__(self, name):
         self.model = Gtk.ListStore(str, str)
-        Gtk.TreeView.__init__(self, self.model)
+        Gtk.TreeView.__init__(self, model=self.model)
 
         self.SelectionHandler = None
 
@@ -248,8 +248,8 @@ class SelectorButtons(Gtk.HBox):
         self.buttons = []
 
     def add_button(self, label, callback):
-        arrow = Gtk.Arrow(Gtk.ArrowType.RIGHT, Gtk.ShadowType.NONE)
-        button = Gtk.Button(label)
+        arrow = Gtk.Arrow(arrow_type=Gtk.ArrowType.RIGHT, shadow_type=Gtk.ShadowType.NONE)
+        button = Gtk.Button(label=label)
         button.set_relief(Gtk.ReliefStyle.NONE)
         button.connect('clicked', self.on_button_clicked, callback)
         if self.get_children():
@@ -336,7 +336,7 @@ class ScrolledList(Gtk.ScrolledWindow):
 
         self.store = Gtk.ListStore(GObject.TYPE_STRING)
     
-        self.view = Gtk.TreeView(self.store)
+        self.view = Gtk.TreeView(model=self.store)
         self.view.set_headers_visible(True)
         self.view.insert_column_with_attributes(-1, name, Gtk.CellRendererText(), text=0)
         
@@ -926,7 +926,7 @@ class GlobalEdgeSelector(EdgeSelector):
 class Popup (Gtk.Window):
 
     def __init__ (self, parent=None, text=None, child=None, decorated=True, mouse=False, modal=True):
-        Gtk.Window.__init__ (self, Gtk.WindowType.TOPLEVEL)
+        Gtk.Window.__init__(self, type=Gtk.WindowType.TOPLEVEL)
         self.set_type_hint (Gdk.WindowTypeHint.UTILITY)
         self.set_position (mouse and Gtk.WindowPosition.MOUSE or Gtk.WindowPosition.CENTER_ALWAYS)
         if parent:
@@ -935,7 +935,7 @@ class Popup (Gtk.Window):
         self.set_decorated (decorated)
         self.set_property("skip-taskbar-hint", True)
         if text:
-            label = Gtk.Label (text)
+            label = Gtk.Label(label=text)
             align = Gtk.Alignment ()
             align.set_padding (20, 20, 20, 20)
             align.add (label)
@@ -1147,7 +1147,7 @@ class MatchButton(Gtk.Button):
 
         self.match = self.entry.get_text ()
 
-        dlg = Gtk.Dialog (_("Edit match"))
+        dlg = Gtk.Dialog(title=_("Edit match"))
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.get_parent ().get_toplevel ())
         dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
@@ -1173,7 +1173,7 @@ class MatchButton(Gtk.Button):
         box.set_spacing (5)
         entry = Gtk.Entry ()
         entry.connect ('changed', self._check_entry_value, dlg)
-        button = Gtk.Button (_("Grab"))
+        button = Gtk.Button(label=_("Grab"))
         button.connect ('clicked', self.grab_value, entry, type_chooser)
         box.pack_start (entry, True, True, 0)
         box.pack_start (button, False, False, 0)
@@ -1343,10 +1343,10 @@ class ErrorDialog (Gtk.MessageDialog):
     '''Display an error dialog'''
 
     def __init__ (self, parent, message):
-        Gtk.MessageDialog.__init__ (self, parent,
-                                    Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                    Gtk.MessageType.ERROR,
-                                    Gtk.ButtonsType.CLOSE)
+        Gtk.MessageDialog.__init__(self, transient_for=parent,
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.ERROR,
+                                   buttons=Gtk.ButtonsType.CLOSE)
         self.set_position (Gtk.WindowPosition.CENTER)
         self.set_markup (message)
         self.set_title (_("An error has occured"))
@@ -1361,10 +1361,10 @@ class FirstRun (Gtk.MessageDialog):
     '''First run dialog providing a user warning.'''
 
     def __init__(self, parent):
-        Gtk.MessageDialog.__init__ (self, parent,
-                                    Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                    Gtk.MessageType.WARNING,
-                                    Gtk.ButtonsType.OK)
+        Gtk.MessageDialog.__init__(self, transient_for=parent,
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.WARNING,
+                                   buttons=Gtk.ButtonsType.OK)
         self.set_position (Gtk.WindowPosition.CENTER)
         title = _("CCSM is an advanced tool. Use with caution.")
         self.set_markup("<b>%s</b>" % title)

@@ -439,7 +439,7 @@ class NumberSetting(StockSetting):
             self.Inc = info[2]
         inc = self.Inc
         self.NoneValue = info[0]
-        self.Adj = Gtk.Adjustment(0, info[0], info[1], inc, inc*10)
+        self.Adj = Gtk.Adjustment(value=0, lower=info[0], upper=info[1], step_increment=inc, page_increment=inc*10)
         self.Spin = Gtk.SpinButton(adjustment=self.Adj)
         self.Spin.set_value(self.Get())
         self.Spin.connect("value-changed", self.Changed)
@@ -517,7 +517,7 @@ class BaseListSetting(Setting):
         types, cols = self.ListInfo()
         self.Types = types
         self.Store = Gtk.ListStore(*types)
-        self.View = Gtk.TreeView(self.Store)
+        self.View = Gtk.TreeView(model=self.Store)
         self.View.set_headers_visible(True)
 
         for widget in self.Widgets:
@@ -540,7 +540,7 @@ class BaseListSetting(Setting):
         self.Scroll.add(self.View)
         self.Widget.pack_start(self.Scroll, True, True, 0)
         self.Widget.set_child_packing(self.Scroll, True, True, 0, Gtk.PackType.START)
-        buttonBox = Gtk.HBox(False)
+        buttonBox = Gtk.HBox(homogeneous=False)
         buttonBox.set_spacing(5)
         buttonBox.set_border_width(5)
         self.Widget.pack_start(buttonBox, False, False, 0)
@@ -551,7 +551,7 @@ class BaseListSetting(Setting):
                  (Gtk.STOCK_GO_DOWN, self.Move, 'down', False),)
         self.Buttons = {}
         for stock, callback, data, sensitive in buttonTypes:
-            b = Gtk.Button(stock)
+            b = Gtk.Button(label=stock)
             b.set_use_stock(True)
             buttonBox.pack_start(b, False, False, 0)
             if data is not None:
@@ -627,7 +627,7 @@ class BaseListSetting(Setting):
             self._Delete(row)
 
     def _MakeEditDialog(self):
-        dlg = Gtk.Dialog(_("Edit"))
+        dlg = Gtk.Dialog(title=_("Edit"))
         vbox = Gtk.VBox(spacing=TableX)
         vbox.props.border_width = 6
         dlg.vbox.pack_start(vbox, True, True, 0)
@@ -635,7 +635,7 @@ class BaseListSetting(Setting):
         dlg.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
         dlg.set_default_response(Gtk.ResponseType.CLOSE)
 
-        group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+        group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         for widget in self.Widgets:
             vbox.pack_start(widget.EBox, False, False, 0)
             group.add_widget(widget.Label)
@@ -791,7 +791,7 @@ class EnumFlagsSetting(Setting):
         sortedItems = sorted(self.Setting.Info[1][2].items(), key=EnumSettingKeyFunc)
         self.minVal = sortedItems[0][1]
         for key, value in sortedItems:
-            box = Gtk.CheckButton(key)
+            box = Gtk.CheckButton(label=key)
             self.Checks.append((key, box))
             table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
             box.connect('toggled', self.Changed)
@@ -842,7 +842,7 @@ class RestrictedStringFlagsSetting(Setting):
         self.ItemsByValue = info[1]
         sortedItems = info[2]
         for key, value in sortedItems:
-            box = Gtk.CheckButton(key)
+            box = Gtk.CheckButton(label=key)
             self.Checks.append((key, box))
             table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
             box.connect('toggled', self.Changed)
@@ -905,7 +905,7 @@ class EditableActionSetting (StockSetting):
 
 
     def RunEditDialog (self, widget):
-        dlg = Gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog(title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
@@ -1021,7 +1021,7 @@ class KeySetting (EditableActionSetting):
                 new = current.replace ("%s_R" % modifier, "")
             label.set_text (self.GetLabelText (new))
 
-        dlg = Gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog(title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ALWAYS)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_icon (self.Widget.get_toplevel ().get_icon ())
@@ -1036,7 +1036,7 @@ class KeySetting (EditableActionSetting):
         alignment.add (mainBox)
         dlg.vbox.pack_start (alignment, True, True, 0)
 
-        checkButton = Gtk.CheckButton (_("Enabled"))
+        checkButton = Gtk.CheckButton(label=_("Enabled"))
         active = len (self.current) \
                  and self.current.lower () not in ("disabled", "none")
         checkButton.set_active (active)
@@ -1064,7 +1064,7 @@ class KeySetting (EditableActionSetting):
         grabber.set_tooltip_text (self.Setting.LongDesc)
         box.pack_start (grabber, True, True, 0)
 
-        label = Gtk.Label (self.current)
+        label = Gtk.Label(label=self.current)
         label.set_tooltip_text (self.Setting.LongDesc)
         alignment = Gtk.Alignment (xalign=0.5, yalign=0.5)
         alignment.set_padding (15, 0, 0, 0)
@@ -1174,7 +1174,7 @@ class ButtonSetting (EditableActionSetting):
             else:
                 box.hide ()
                 dialog.resize (1, 1)
-        dlg = Gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog(title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ALWAYS)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
@@ -1188,7 +1188,7 @@ class ButtonSetting (EditableActionSetting):
         alignment.add (mainBox)
         dlg.vbox.pack_start (alignment, True, True, 0)
 
-        checkButton = Gtk.CheckButton (_("Enabled"))
+        checkButton = Gtk.CheckButton(label=_("Enabled"))
         active = len (self.current) \
                  and self.current.lower () not in ("disabled", "none")
         checkButton.set_active (active)
@@ -1347,7 +1347,7 @@ class EdgeSetting (EditableActionSetting):
         self.Button.set_label (label)
 
     def RunEdgeSelector (self, widget):
-        dlg = Gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog(title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
