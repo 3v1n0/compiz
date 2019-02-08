@@ -303,7 +303,7 @@ TEST_F (CCSContextTestWithMockedBackendProfile, TestSetup)
  * just load the profile and end up with an empty config */
 TEST_F (CCSContextTestWithMockedBackendProfile, ImportProfileIfNotAvailableInBackend)
 {
-    const std::string sysconfProfile (std::string (SYSCONFDIR) + "/compizconfig/" + unavailableProfileStr);
+    const std::string sysconfProfile (std::string (CONFIGDIR) + "/" + unavailableProfileStr);
 
     ExistingProfile (availableProfileStr);
     AddAvailableSysconfProfile (sysconfProfile);
@@ -316,7 +316,7 @@ TEST_F (CCSContextTestWithMockedBackendProfile, ImportProfileIfNotAvailableInBac
 
 TEST_F (CCSContextTestWithMockedBackendProfile, ImportProfileDotIni)
 {
-    const std::string sysconfProfile (std::string (SYSCONFDIR) + "/compizconfig/" + unavailableProfileStr + ".ini");
+    const std::string sysconfProfile (std::string (CONFIGDIR) + "/" + unavailableProfileStr + ".ini");
 
     ExistingProfile (availableProfileStr);
     AddAvailableSysconfProfile (sysconfProfile);
@@ -329,7 +329,7 @@ TEST_F (CCSContextTestWithMockedBackendProfile, ImportProfileDotIni)
 
 TEST_F (CCSContextTestWithMockedBackendProfile, ImportProfileDotProfile)
 {
-    const std::string sysconfProfile (std::string (SYSCONFDIR) + "/compizconfig/" + unavailableProfileStr + ".profile");
+    const std::string sysconfProfile (std::string (CONFIGDIR) + "/" + unavailableProfileStr + ".profile");
 
     ExistingProfile (availableProfileStr);
     AddAvailableSysconfProfile (sysconfProfile);
