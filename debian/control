@@ -6,7 +6,6 @@ XSBC-Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 Uploaders: David Nusinow <dnusinow@debian.org>, Sean Finney <seanius@debian.org>, Cyril Brulebois <kibi@debian.org>
 Build-Depends: cmake (>= 3.10.0),
                debhelper (>= 9~),
-               dh-migrations,
                dh-python,
                dh-translations,
                googletest (>= 1.8.0),
@@ -159,6 +158,7 @@ Replaces: compiz-plugins-main (<= 1:0.9.8),
           libcompizconfig0 (<= 1:0.9.8),
 Breaks: compiz-plugins-main (<= 1:0.9.8),
         compiz-plugins-main-default (<= 1:0.9.8),
+        unity (<< 7.5.0+19.04.20190208-0ubuntu1~),
 Description: OpenGL window and compositing manager - GNOME window decorator
  Compiz brings to life a variety of visual effects that make the Linux desktop
  easier to use, more powerful and intuitive, and more accessible for users
