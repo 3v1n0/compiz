@@ -57,9 +57,8 @@ Build-Depends: cmake (>= 3.10.0),
                gsettings-desktop-schemas-dev,
                xserver-xorg-dev (>= 0.7.0),
 Standards-Version: 3.9.8
-# If you aren't a member of ~compiz-team but need to upload packaging changes,
-# just go ahead.  ~compiz-team will notice and sync up the code again.
-Vcs-Bzr: https://code.launchpad.net/~compiz-team/compiz/0.9.10
+Vcs-Git: https://git.launchpad.net/~compiz-team/compiz
+Vcs-Browser: https://git.launchpad.net/~compiz-team/compiz?h=master
 Homepage: https://launchpad.net/compiz
 
 Package: compiz

@@ -1,3 +1,15 @@
+compiz (1:0.9.13.1+19.04.20190212-0ubuntu1) UNRELEASED; urgency=medium
+
+  * Code moved (again) to git as default vcs
+  * debian/control:
+    - Update Vcs-Git and Homepage tags
+  * debian/gbp.conf:
+    - Update branches and tags templates
+  * debian/source/foarmat:
+    - Update version to 3.0 (native)
+
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Tue, 12 Feb 2019 18:43:18 +0100
+
 compiz (1:0.9.13.1+19.04.20190208-0ubuntu1) disco; urgency=medium
 
   [ Alberts Muktupāvels ]
